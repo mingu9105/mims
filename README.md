@@ -12,7 +12,12 @@
 3. Mysql (https://dev.mysql.com/downloads/windows/installer/8.0.html)
 4. sourcetree (https://www.sourcetreeapp.com/)
 
-[process]
+[process - login]
+1. start project name MIMS
+2. add django app name member
+3. add signup page in member django app
+
+[process - mainpage]
 1. start project name myMIMS
 2. add git flow (master, developer, feature) in sourcetree app
 3. add django app name mapping
