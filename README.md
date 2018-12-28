@@ -20,6 +20,9 @@
 
 [git source tree 원격 저장소에 push 하기]
 
+[개발환경]
+1. python 3.6.5
+
 [install library - pip install]
 1. Django
 2. pytz
