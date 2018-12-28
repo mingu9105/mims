@@ -1,4 +1,4 @@
-# 2018-2-myMIMS
+# 2018-2-mims
 
 [install library - pip install]
 1. Django
