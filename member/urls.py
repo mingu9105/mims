@@ -21,6 +21,7 @@ from member.views import *
 
 app_name='member'
 urlpatterns = [
-    path('signup/', views.join0, name='signup1'),
-    path('signup2/', views.join, name='signup2'),
+    path('signup1/', views.join0, name='signup1'),
+    path('signup2/', SignUp.as_view(), name='signup2'),
+    # path('signup2/', views.join, name='signup2'),
 ]
