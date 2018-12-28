@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MIMS 회원가입</title>
+<script language="javascript">
+    function validate() {
+       var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+       var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+       // 이메일이 적합한지 검사할 정규식
+
+       var id = document.getElementById("user_id");
+       var pw = document.getElementById("user_pw");
+       var email = document.getElementById("user_email");
+       var user_num_1 = document.getElementById("user_num_1");
+       var user_num_2 = document.getElementById("user_num_2");
+       var user_phone_1 = document.getElementById("user_phone_1")
+       var user_phone_2 = document.getElementById("user_phone_2")
+       var address = document.getElementById("user_address")
+       var user_doctor_no = document.getElementById("user_doctor_no") 
+       var user_hospital_no_1 = document.getElementById("user_hospital_no1")
+       var user_hospital_no_2 = document.getElementById("user_hospital_no2")
+       var user_hospital_no_3 = document.getElementById("user_hospital_no3") 
+
+       var arrNum1 = new Array(); // 주민번호 앞자리숫자 6개를 담을 배열
+       var arrNum2 = new Array(); // 주민번호 뒷자리숫자 7개를 담을 배열
+
+       // ------------ 이메일 까지 -----------
+
+       if(!check(re,id,"아이디는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+           return false;
+       }
+
+       if(!check(re,pw,"패스워드는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+           return false;
+       }
+
+       if(join.user_pw.value != join.checkpw.value) {
+           alert("비밀번호가 다릅니다. 다시 확인해 주세요.");
+           join.checkpw.value = "";
+           join.checkpw.focus();
+           return false;
+       }
+       if(join.user_name.value=="") {
+           alert("이름을 입력해 주세요");
+           join.user_name.focus();
+           return false;
+       }         
+       // -------------- 주민번호 -------------
+
+       for (var i=0; i<user_num_1.value.length; i++) {
+           arrNum1[i] = user_num_1.value.charAt(i);
+       } // 주민번호 앞자리를 배열에 순서대로 담는다.
+
+       for (var i=0; i<user_num_2.value.length; i++) {
+           arrNum2[i] = user_num_2.value.charAt(i);
+       } // 주민번호 뒷자리를 배열에 순서대로 담는다.
+
+       var tempSum=0;
+
+       for (var i=0; i<user_num_1.value.length; i++) {
+           tempSum += arrNum1[i] * (2+i);
+       } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+
+       for (var i=0; i<user_num_2.value.length-1; i++) {
+           if(i>=2) {
+               tempSum += arrNum2[i] * i;
+           }
+           else {
+               tempSum += arrNum2[i] * (8+i);
+           }
+       } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+
+       if(false) {
+    //    if((11-(tempSum%11))%10!=arrNum2[6]) {
+           alert("올바른 주민번호가 아닙니다.");
+           user_num_1.value = "";
+           user_num_2.value = "";
+           user_num_1.focus();
+           return false;
+       }else{
+     	// ------------ 생일 자동 등록 -----------
+           if(arrNum2[0]==1 || arrNum2[0]==2) {
+               var y = parseInt(user_num_1.value.substring(0,2));
+               var m = parseInt(user_num_1.value.substring(2,4));
+               var d = parseInt(user_num_1.value.substring(4,6));
+               join.user_years.value = 1900 + y;
+               join.user_month.value = m;
+               join.user_day.value = d;
+           }
+           else if(arrNum2[0]==3 || arrNum2[0]==4) {
+               var y = parseInt(user_num_1.value.substring(0,2));
+               var m = parseInt(user_num_1.value.substring(2,4));
+               var d = parseInt(user_num_1.value.substring(4,6));
+               join.user_years.value == 2000 + y;
+               join.user_month.value = m;
+               join.user_day.value = d;
+           }
+       }      
+
+       if(user_phone_1.value=="") {
+           alert("전화번호를 입력해주세요");
+           join.user_phone_1.focus();
+           return false;
+       }
+
+       if(user_phone_2.value=="") {
+           alert("전화번호를 입력해주세요");
+           join.user_phone_2.focus();
+           return false;
+       }
+
+       if(email.value=="") {
+           alert("이메일을 입력해 주세요");
+           join.user_email.focus();
+           return false;
+       }
+
+       if(!check(re2, email, "적합하지 않은 이메일 형식입니다.")) {
+           return false;
+       }
+
+       if(address.value=="") {
+           alert("주소를 입력해주세요");
+           join.user_address.focus();
+           return false;
+       }
+
+       if(user_doctor_no.value=="") {
+           alert("의사 면허 번호를 입력해주세요");
+           join.user_doctor_no.focus();
+           return false;
+       }
+
+    //    if(address.value=="") {
+    //        alert("전공 분야를 선택해주세요");
+    //        join.user_address.focus();
+    //        return false;
+    //    }
+
+       if(user_hospital_no_1.value=="" || user_hospital_no_2.value=="" || user_hospital_no_3.value=="") {
+           alert("병원 사업자 번호를 입력해주세요");
+           join.user_hospital_no.focus();
+           return false;
+       }
+       
+    
+       alert("회원가입이 완료되었습니다.");
+       
+    }
+
+   function check(re, what, message) {
+       if(re.test(what.value)) {
+           return true;
+       }
+       alert(message); 
+       what.value = "";
+       what.focus();
+       //return false;
+   }
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+<h1 align="center" style="font-size:50px;"><font color="navy"><b>MIMS 회원 가입</b></font></h1>
+<form name="join" onsubmit="return validate();"  method="post">
+    {% csrf_token %}
+    <table width="600" height="400" border="1" align="center" cellspacing="0">
+    <tr>
+        <td align="right" >아이디 :</td>
+        <td><input type="text" name="user_id" id="user_id" maxlength="12"></td>
+    </tr> 
+    <tr>
+        <td align="right">비밀번호 :</td>
+        <td> <input type="password" name="user_pw" id="user_pw" maxlength="12"></td>
+    </tr>
+    <tr>
+        <td align="right">비밀번호 확인 :</td>
+        <td><input type="password" style="width:170px" id="checkpw" maxlength="12"/></td> 
+    </tr>
+    <tr>
+        <td align="right">이름 :</td>
+        <td> <input type="text" name="user_name" id="user_name"></td>
+    </tr>
+    <tr>
+        <td align="right">Personal No. :</td>
+        <td>
+            <input type="text" name="user_num_1" id="user_num_1" size="10" maxlength="6">-</input>
+            <input type="password" name="user_num_2" id="user_num_2" size="10" maxlength="7"></input>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">Birth :</td>
+        <td>
+            <input type="text" style="width:80px" name="user_years" id="user_years" readonly/>년
+            <input type="text" style="width:80px" name="user_month" id="user_month" readonly/>월
+            <input type="text" style="width:80px" name="user_day" id="user_day" readonly/>일
+        </td>
+    </tr>
+    <tr>
+        <td align="right">Phone No. :</td>
+        <td>
+            <select>
+                <option value="t010">010</option>
+                <option value="t011">011</option>
+                <option value="t016">016</option>
+                <option value="t017">017</option>
+                <option value="t019">019</option>
+            </select>
+                -<input type="text" maxlength="4" size="4" id=user_phone_1 name="user_phone_1">
+                -<input type="text" maxlength="4" size="4" id="user_phone_2" name="user_phone_2">
+        </td>
+    </tr>
+    <tr>
+        <td align="right">E-mail :</td>
+        <td><input type="text" style="width:170px" name="user_email" id="user_email" /></td>
+    </tr>
+    <tr>
+            <td align="right">Address :</td>
+            <td><input type="text" style="width:350px" name="user_address" id="user_address" ></td>
+    </tr>
+    <tr>
+        <td align="right">Doctor No. :</td>
+        <td><input type="text" name="user_doctor_no" id="user_doctor_no" maxlength="6" minlength="4"></td>
+    </tr>
+    <tr>
+        <td align="right">Major :</td>
+        <td>
+            <select>
+                <option value="내과">내과</option>
+                <option value="외과">외과</option>
+                <option value="흉부">흉부</option>
+                <option value="산부">산부</option>
+                <option value="정신">정신</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">Hospital No. :</td>
+        <td>
+            <input type="text" size="3" name="user_hospital_no1" id="user_hospital_no1" maxlength="3">
+            -<input type="text" size="2" name="user_hospital_no2" id="user_hospital_no2" maxlength="2">
+            -<input type="text" size="5" name="user_hospital_no3" id="user_hospital_no3" maxlength="5">
+        </td>
+    </tr>
+    <tr>    
+        <td>
+            <input type="submit" value="확인하기">
+        </td>
+    </tr>    
+</form>
+</body>
+</html>
