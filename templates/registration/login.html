@@ -2,6 +2,14 @@
 
 {% block content %}
 
+<script>
+    $(document).ready(function(){
+        $('#signup_btn').click(function(){
+            location.href="{% url 'member:signup1' %}"
+        });
+    });
+</script>
+
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -28,9 +36,11 @@
 </tr>
 </table>
 
-<input type="submit" value="login">
+<input type="submit" value="로그인">
 <input type="hidden" name="next" value="{{ next }}">
 </form>
+
+<button id="signup_btn">회원가입</button>
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>

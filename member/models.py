@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
+from django.conf import settings
 
 # Create your models here.
 class Member(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default="")
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, default="")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # user_id = models.CharField(max_length=50, primary_key=True)
     # user_pw = models.CharField(max_length=50)
     user_email = models.CharField(max_length=50, blank = True)
@@ -20,4 +24,4 @@ class Member(models.Model):
     user_hospital_no1 = models.CharField(max_length=50, blank = True)
     user_hospital_no2 = models.CharField(max_length=50, blank = True)
     user_hospital_no3 = models.CharField(max_length=50, blank = True)
-    c_date = models.DateTimeField()
+    c_date = models.DateTimeField(timezone.now())

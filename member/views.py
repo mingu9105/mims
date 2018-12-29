@@ -9,6 +9,8 @@ from django.urls import reverse_lazy
 
 from django.views import generic
 
+from django.conf import settings
+
 from member.models import Member
 from member.forms import CustomUserCreationForm, MemberForm
 
@@ -33,10 +35,18 @@ class SignUp(generic.CreateView):
                 if self.request.method == 'POST':
                         user_form = CustomUserCreationForm(self.request.POST)
                         member_form = MemberForm(self.request.POST)
+                        print("self.request.?",self.request.member)
+                        print("self.request.POST",self.request.POST)
+                        print("user_form.is_valid()",user_form.is_valid())
+                        print("member_form.is_valid()",member_form.is_valid())
                         if user_form.is_valid() and member_form.is_valid():
                                 user_form.save()
                                 member_form.save()
-                        return HttpResponseRedirect(self.get_success_url())
+                                print("user_form.is_valid()",user_form.is_valid())
+                        print("form_valid------------")
+                        print(settings)
+                        # return HttpResponseRedirect(self.get_success_url())
+                        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
 
 def join0(request):
